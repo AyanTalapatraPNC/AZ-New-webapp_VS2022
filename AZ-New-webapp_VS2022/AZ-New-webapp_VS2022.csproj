@@ -5,6 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>AZ_New_webapp_VS2022</RootNamespace>
+    <ApplicationInsightsResourceId>/subscriptions/3e361372-ba7e-4a6f-bc43-7a7e9e1e04fb/resourceGroups/AzureFunctionDemo/providers/microsoft.insights/components/AyanFirstAzureFunctionapp</ApplicationInsightsResourceId>
+    <UserSecretsId>377bd514-be79-46d9-ac39-a4f437e60e43</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+  </ItemGroup>
 
 </Project>
