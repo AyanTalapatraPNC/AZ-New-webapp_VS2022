@@ -10,6 +10,7 @@ namespace AZ_New_webapp_VS2022.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IConfiguration _config;
+        public string? ErrorMessage { get; set; }
         public IndexModel(ILogger<IndexModel> logger,IConfiguration config)
         {
             _logger = logger;
@@ -54,7 +55,7 @@ namespace AZ_New_webapp_VS2022.Pages
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
+                    ErrorMessage = ex.Message;
                 }
             }
         }
