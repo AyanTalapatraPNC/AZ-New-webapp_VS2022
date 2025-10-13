@@ -1,3 +1,4 @@
+using AZ_New_webapp_VS2022.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
@@ -14,16 +15,16 @@ namespace AZ_New_webapp_VS2022.Pages
             _logger = logger;
             this._config = config;
         }
+
+        public List<Employee> EmployeeList { get; set; } = new();
+
         public void OnPostClick()
         {
-            // This code runs when the button is clicked
-            Console.WriteLine("Button clicked!");
-            var config = new ConfigurationBuilder()
-            .AddUserSecrets<Program>()  // Load from secrets.json
-            .Build();
+
 
             // Get the connection string
-            var connectionString = config.GetConnectionString("ConnectionString");
+            var connectionString = this._config["connectionString"];
+       
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
@@ -32,16 +33,23 @@ namespace AZ_New_webapp_VS2022.Pages
                     //Console.WriteLine("Connected to Azure SQL Database!");
 
                     string query = "SELECT * FROM Employees";
-
+                    string output = "";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             // Example: read first two columns
-                            Response.ContentType = "text/plain";
-                            Response.WriteAsync($"{reader[0]} - {reader[1]}");
+                            var emp = new Employee();
+                            emp.Id = (int)reader[0];
+                            emp.FirstName = (string)reader[1];
+                            emp.LastName = (string)reader[2];
+                            emp.BirthDate = (DateTime)reader[3];
+                            emp.HireDate = (DateTime)reader[4];
+                            emp.Salary = (decimal)reader[5];
+                            EmployeeList.Add(emp);
                         }
+                        
                     }
                 }
                 catch (Exception ex)
