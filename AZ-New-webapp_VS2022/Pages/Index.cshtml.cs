@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace AZ_New_webapp_VS2022.Pages
 {
@@ -33,25 +34,29 @@ namespace AZ_New_webapp_VS2022.Pages
                     connection.Open();
                     //Console.WriteLine("Connected to Azure SQL Database!");
 
-                    string query = "SELECT * FROM Employees";
-                    string output = "";
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            // Example: read first two columns
-                            var emp = new Employee();
-                            emp.Id = (int)reader[0];
-                            emp.FirstName = (string)reader[1];
-                            emp.LastName = (string)reader[2];
-                            emp.BirthDate = (DateTime)reader[3];
-                            emp.HireDate = (DateTime)reader[4];
-                            emp.Salary = (decimal)reader[5];
-                            EmployeeList.Add(emp);
-                        }
-                        
-                    }
+                    //using DBcontext entity framework
+                    
+                    //using Raw SQL
+
+                    /* string query = "SELECT * FROM Employees";
+                     string output = "";
+                     using (SqlCommand command = new SqlCommand(query, connection))
+                     using (SqlDataReader reader = command.ExecuteReader())
+                     {
+                         while (reader.Read())
+                         {
+                             // Example: read first two columns
+                             var emp = new Employee();
+                             emp.Id = (int)reader[0];
+                             emp.FirstName = (string)reader[1];
+                             emp.LastName = (string)reader[2];
+                             emp.BirthDate = (DateTime)reader[3];
+                             emp.HireDate = (DateTime)reader[4];
+                             emp.Salary = (decimal)reader[5];
+                             EmployeeList.Add(emp);
+                         }
+
+                     }*/
                 }
                 catch (Exception ex)
                 {
